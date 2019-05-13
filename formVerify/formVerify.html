@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="dist/css/layui.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+ 
+  
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  <legend>初始赋值演示</legend>
+</fieldset>
+ 
+<form class="layui-form" action="" lay-filter="example">
+  <div class="layui-row">
+    <!-- 输入框 -->
+    <div class="layui-col-md3">
+      <div class="layui-form-item">
+        <label class="layui-form-label">输入框</label>
+        <div class="layui-input-block">
+          <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+        </div>
+      </div>
+    </div>
+
+    <!-- 单选框 -->
+    <div class="layui-col-md3">
+      <div class="layui-form-item">
+        <label class="layui-form-label">这里是label</label>
+        <div class="layui-input-block" lay-verify="notNull">
+          <input type="radio" name="RADIO_RADIONAME" value="1" title="是" lay-filter="RADIONAME">
+          <input type="radio" name="RADIO_RADIONAME" value="0" title="否" lay-filter="RADIONAME">
+        </div>
+      </div>
+    </div>
+    <!-- 下拉框 -->
+    <div class="layui-col-md3">
+      <div class="layui-form-item">
+        <label class="layui-form-label">这里是babel</label>
+        <div class="layui-input-block">
+          <select name="selectName" lay-filter="selectName">
+            <option value='0'>选项一</option>
+            <option value='1'>选项二</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 复选框 -->
+    <div class="layui-col-md3">
+      <div class="layui-form-item">
+        <label class="layui-form-label">这里是label</label>
+        <div class="layui-input-block">
+          <input type="checkbox" name="like[one]" title="选项一" checked>
+          <input type="checkbox" name="like[two]" title="选项二">
+          <input type="checkbox" name="like[thr]" title="选项三">
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <a class="layui-btn" lay-submit lay-filter="demo1">立即提交</a>
+    </div>
+  </div>
+</form>
+
+          
+<script src="dist/layui.js" charset="utf-8"></script>
+<script src="js/jquery.min.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+
+layui.use(['form', 'layedit', 'laydate'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+  
+
+
+  aa();
+
+  //表单验证
+  formVerify();
+
+  
+});
+
+//监听表单表单提交
+function aa(){
+  layui.use('form', function () {
+    var form = layui.form;
+  	//监听提交
+  	form.on('submit(demo1)', function(data){
+    // layer.alert(JSON.stringify(data.field), {
+    //   title: '最终的提交信息'
+    // })
+    //return false;
+    alert("111")
+    });
+  });
+}
+
+
+//表单验证和自定义表单验证
+function formVerify () {
+  layui.use('form', function () {
+      var form = layui.form;
+
+      form.verify({
+        //自定义验证
+        notNull:function(value,item){
+          var radioVal = $(item).find("input[name='RADIO_RADIONAME']:checked").val();
+          if (typeof (radioVal) == "undefined") {
+              return "单选框不能为空!";
+          }
+        },
+        //表单
+        title: function(value){
+            if(value.length < 5){
+              return '标题至少得5个字符啊';
+            }
+        },
+        content: function(value){
+          layedit.sync(editIndex);
+        }
+      });
+      
+      //监听单选框
+      form.on('radio(RADIONAME)', function (data) {//根据lay-filter
+          //选是开验证
+          if ($("input[name='RADIO_RADIONAME']:checked").val() == 1) {
+              alert('当前选择为是')
+          }
+          //选否关验证
+          if ($("input[name='RADIO_RADIONAME']:checked").val() == 0) {
+            alert('当前选择为否')
+          }
+      });
+
+
+
+  });
+}
+
+
+
+
+</script>
+
+</body>
+</html>
