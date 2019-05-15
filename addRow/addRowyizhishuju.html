@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../src/dist/css/layui.css" media="all">
+    <script src="../src/js/jquery.min.js"></script>
+    <script src="../src/dist/layui.all.js" charset="utf-8"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<button class="layui-btn" id="addNew" onclick="addRow()">新增一行</button>
+<table id="testTable"></table>
+
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+    layui.use(['table'], function () {
+
+        //执行一个laydate实例
+        var table = layui.table;
+        table.render({
+            id: 'testTable',
+            elem: '#testTable',
+            height: 400,
+            data: [],
+            page: {},
+            cols: [[
+                // {type: 'checkbox', fix: true},
+                {field: 'NAME', title: '名称',edit: 'text'},
+                {field: 'CERTIFICATETYPE', title: '证件类型',edit: 'text'},
+                {field: 'CERTIFICATENO', title: '证件号码',edit: 'text'},
+                {field: 'ADDRESS', title: '联系地址',edit: 'text'},
+                {field: '', title: '操作'}
+            ]]
+        });
+        // $('#addNew').click(function () {
+        // // var dataOld = table.cache.testTable||[];
+        // //debugger;
+        // var dataOld = tableObj.config.data||[];
+        // dataOld.push({id: dataOld.length + 1});
+        // tableObj = table.reload('testTable', {
+        //     data: dataOld
+        // });
+    });
+  
+function addRow(){
+    layui.use('table', function () {
+    var table = layui.table;
+        var data = layui.table.cache["testTable"];
+        data.push({
+            NAME: '111',
+            CERTIFICATETYPE: '222',
+            CERTIFICATENO: '333',
+            PHONE: '444',
+            ADDRESS:'555'
+        });
+        console.log(data)
+        table.reload('testTable', {
+            data: data
+        });
+    });
+}
+
+
+</script>
+</body>
+</html>

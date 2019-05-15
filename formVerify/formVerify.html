@@ -6,7 +6,7 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link rel="stylesheet" href="dist/css/layui.css" media="all">
+  <link rel="stylesheet" href="../src/dist/css/layui.css" media="all">
   <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
@@ -52,7 +52,7 @@
     </div>
     
     <!-- 复选框 -->
-    <div class="layui-col-md3">
+    <!-- <div class="layui-col-md3">
       <div class="layui-form-item">
         <label class="layui-form-label">这里是label</label>
         <div class="layui-input-block">
@@ -61,10 +61,11 @@
           <input type="checkbox" name="like[thr]" title="选项三">
         </div>
       </div>
-    </div>
+    </div> -->
     
   </div>
   
+  <!-- 必须在form里面 -->
   <div class="layui-form-item">
     <div class="layui-input-block">
       <a class="layui-btn" lay-submit lay-filter="demo1">立即提交</a>
@@ -73,8 +74,8 @@
 </form>
 
           
-<script src="dist/layui.js" charset="utf-8"></script>
-<script src="js/jquery.min.js"></script>
+<script src="../src/dist/layui.js" charset="utf-8"></script>
+<script src="../src/js/jquery.min.js"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>
 
@@ -86,25 +87,26 @@ layui.use(['form', 'layedit', 'laydate'], function(){
   
 
 
-  aa();
+  listenSubmit();
 
   //表单验证
   formVerify();
-
+  
+  listenRadio();
   
 });
 
 //监听表单表单提交
-function aa(){
+function listenSubmit(){
   layui.use('form', function () {
     var form = layui.form;
   	//监听提交
   	form.on('submit(demo1)', function(data){
-    // layer.alert(JSON.stringify(data.field), {
-    //   title: '最终的提交信息'
-    // })
+    layer.alert(JSON.stringify(data.field), {
+      title: '最终的提交信息'
+    })
     //return false;
-    alert("111")
+    //alert("111")
     });
   });
 }
@@ -128,12 +130,27 @@ function formVerify () {
             if(value.length < 5){
               return '标题至少得5个字符啊';
             }
-        },
-        content: function(value){
-          layedit.sync(editIndex);
         }
       });
       
+      //监听单选框
+      // form.on('radio(RADIONAME)', function (data) {//根据lay-filter
+      //     //选是开验证
+      //     if ($("input[name='RADIO_RADIONAME']:checked").val() == 1) {
+      //         alert('当前选择为是')
+      //     }
+      //     //选否关验证
+      //     if ($("input[name='RADIO_RADIONAME']:checked").val() == 0) {
+      //       alert('当前选择为否')
+      //     }
+      // });
+  });
+}
+
+function listenRadio () {
+  layui.use('form', function () {
+      var form = layui.form;
+
       //监听单选框
       form.on('radio(RADIONAME)', function (data) {//根据lay-filter
           //选是开验证
@@ -145,13 +162,8 @@ function formVerify () {
             alert('当前选择为否')
           }
       });
-
-
-
   });
 }
-
-
 
 
 </script>
