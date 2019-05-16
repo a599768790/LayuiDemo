@@ -38,30 +38,44 @@
                 {field: '', title: '操作'}
             ]]
         });
-        // $('#addNew').click(function () {
-        // // var dataOld = table.cache.testTable||[];
-        // //debugger;
-        // var dataOld = tableObj.config.data||[];
-        // dataOld.push({id: dataOld.length + 1});
-        // tableObj = table.reload('testTable', {
-        //     data: dataOld
-        // });
+
     });
-  
-function addRow(){
+
+//已知数据可以生效
+// function addRow(){
+//     layui.use('table', function () {
+//     var table = layui.table;
+//         var data = layui.table.cache["testTable"];
+//         data.push({
+//             NAME: '111',
+//             CERTIFICATETYPE: '222',
+//             CERTIFICATENO: '333',
+//             PHONE: '444',
+//             ADDRESS:'555'
+//         });
+//         console.log(data)
+//         table.reload('testTable', {
+//             data: data
+//         });
+//     });
+// }
+
+//服务器获取数据，本地加载可以生效，本地数据也可以生效
+function addRow() {
     layui.use('table', function () {
-    var table = layui.table;
-        var data = layui.table.cache["testTable"];
-        data.push({
+        var table = layui.table;
+        var tableData = layui.table.cache["testTable"];
+        tableData.push({
             NAME: '111',
             CERTIFICATETYPE: '222',
             CERTIFICATENO: '333',
             PHONE: '444',
-            ADDRESS:'555'
+            ADDRESS: '555'
         });
-        console.log(data)
         table.reload('testTable', {
-            data: data
+            data: tableData,
+            page: false,
+            limit: tableData.length, //每页默认显示的数量//本地数据添加行
         });
     });
 }
