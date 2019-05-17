@@ -32,9 +32,9 @@
     <div class="layui-col-md3">
       <div class="layui-form-item">
         <label class="layui-form-label">这里是label</label>
-        <div class="layui-input-block" lay-verify="notNull">
-          <input type="radio" name="RADIO_RADIONAME" value="1" title="是" lay-filter="RADIONAME">
-          <input type="radio" name="RADIO_RADIONAME" value="0" title="否" lay-filter="RADIONAME">
+        <div class="layui-input-block" lay-verify="notNull" lay-verType="tips">
+          <input type="radio" name="RADIO_RADIONAME" value="1" title="是" lay-filter="filterName">
+          <input type="radio" name="RADIO_RADIONAME" value="0" title="否" lay-filter="filterName">
         </div>
       </div>
     </div>
@@ -117,6 +117,7 @@ function formVerify () {
   layui.use('form', function () {
       var form = layui.form;
 
+      //验证单选框
       form.verify({
         //自定义验证
         notNull:function(value,item){
@@ -124,26 +125,23 @@ function formVerify () {
           if (typeof (radioVal) == "undefined") {
               return "单选框不能为空!";
           }
-        },
-        //表单
-        title: function(value){
-            if(value.length < 5){
-              return '标题至少得5个字符啊';
-            }
         }
       });
       
       //监听单选框
-      // form.on('radio(RADIONAME)', function (data) {//根据lay-filter
-      //     //选是开验证
-      //     if ($("input[name='RADIO_RADIONAME']:checked").val() == 1) {
-      //         alert('当前选择为是')
-      //     }
-      //     //选否关验证
-      //     if ($("input[name='RADIO_RADIONAME']:checked").val() == 0) {
-      //       alert('当前选择为否')
-      //     }
-      // });
+      form.on('radio(filterName)', function (data) {//根据lay-filter
+          //选是开验证
+          if ($("input[name='RADIO_RADIONAME']:checked").val() == 1) {
+              alert('当前选择为是')
+          }
+          //选否关验证
+          if ($("input[name='RADIO_RADIONAME']:checked").val() == 0) {
+            alert('当前选择为否')
+          }
+      });
+
+      //读取单选框
+
   });
 }
 
