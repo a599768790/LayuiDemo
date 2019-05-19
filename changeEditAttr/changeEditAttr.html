@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../src/dist/css/layui.css" media="all">
+    <script src="../src/js/jquery.min.js"></script>
+    <script src="../src/dist/layui.all.js" charset="utf-8"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<button class="layui-btn" id="addNew" onclick="addRow()">新增一行</button>
+<table id="testTable"></table>
+
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+    layui.use(['table'], function () {
+
+        //执行一个laydate实例
+        var table = layui.table;
+        table.render({
+            id: 'testTable',
+            elem: '#testTable',
+            height: 400,
+            data: [
+                {
+                NAME: '111',
+                CERTIFICATETYPE: '222',
+                CERTIFICATENO: '333',
+                PHONE: '444',
+                ADDRESS:'555'
+                },
+            ],
+            page: {},
+            cols: [[
+                // {type: 'checkbox', fix: true},
+                {field: 'NAME', title: '名称',edit: 'text'},
+                {field: 'CERTIFICATETYPE', title: '证件类型',edit: 'text'},
+                {field: 'CERTIFICATENO', title: '证件号码',edit: 'text'},
+                {field: 'ADDRESS', title: '联系地址',edit: 'text'},
+                {field: '', title: '操作'}
+            ]],
+            done: function (res, curr, count) {
+                debugger;
+                // 当前页面缓存数据
+                var dataTemp = table.cache[this.id];
+                // 控件渲染出来的table
+                var tableElem = this.elem.next();
+                layui.each(dataTemp, function (index, data) {
+
+                    // 关闭年龄的修改
+                    tableElem.find('tr[data-index="'+index+'"]').find('td[data-field="ADDRESS"]').removeAttr('data-edit');
+                    
+                });
+            }
+        });
+
+    });
+
+//已知数据可以生效
+// function addRow(){
+//     layui.use('table', function () {
+//     var table = layui.table;
+//         var data = layui.table.cache["testTable"];
+//         data.push({
+//             NAME: '111',
+//             CERTIFICATETYPE: '222',
+//             CERTIFICATENO: '333',
+//             PHONE: '444',
+//             ADDRESS:'555'
+//         });
+//         console.log(data)
+//         table.reload('testTable', {
+//             data: data
+//         });
+//     });
+// }
+
+//服务器获取数据，本地加载可以生效，本地数据也可以生效
+function addRow() {
+    layui.use('table', function () {
+        var table = layui.table;
+        var tableData = layui.table.cache["testTable"];
+        tableData.push({
+            NAME: '111',
+            CERTIFICATETYPE: '222',
+            CERTIFICATENO: '333',
+            PHONE: '444',
+            ADDRESS: '555'
+        });
+        table.reload('testTable', {
+            data: tableData,
+            page: false,
+            limit: tableData.length, //每页默认显示的数量//本地数据添加行
+        });
+    });
+}
+
+
+</script>
+</body>
+</html>
