@@ -49,7 +49,9 @@
                 debugger;
                 // 当前页面缓存数据
                 var dataTemp = table.cache[this.id];
-                // 控件渲染出来的table
+                // 控件渲染出来的table//加载完操作dom，对样式修改判断
+                //tableElem.find('tr[data-index="' + 0 + '"]').find('td[data-field="OPERATE"]').find(".addBtn").show();//显示第一个添加按钮
+                //tableElem.find('tr[data-index="' + 0 + '"]').find('td[data-field="OPERATE"]').find(".delBtn").hide();//删除第一个删除按钮
                 var tableElem = this.elem.next();
                 layui.each(dataTemp, function (index, data) {
 
