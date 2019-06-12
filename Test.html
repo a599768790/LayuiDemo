@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Test</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="src/dist/css/layui.css" media="all">
+  <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+    <form class="layui-form" action="" style="margin-top: 200px;">
+        <div class="layui-form-item">
+            <input id="uname" type="text" name="uname" lay-verify="required" autocomplete="off" placeholder="帐号/手机号" class="layui-input login-input">
+        </div>
+        <div class="layui-form-item">
+            <input id="pass" type="text" name="pass" lay-verify="pass" autocomplete="off" placeholder="密码" class="layui-input login-input">
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit>确认</button>
+            </div>
+        </div>
+    </form>
+  
+
+          
+<script src="src/dist/layui.js" charset="utf-8"></script>
+<script src="src/js/jquery.min.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+$(function(){
+    BrowserType();
+    layui.use(['form', 'jquery'], function (form) {
+
+              $ = layui.jquery;
+
+      form.verify({
+          uname: function(value){
+              if(value===''){
+                  return '请输入帐号或手机号！';
+              }
+          },
+          pass : function (value) {
+              if (value == '') {
+                  return '请输入密码！';
+              }
+          }
+      })
+
+      $('#uname').on('blur', blurV);
+      function blurV () {
+          var DANGER = 'layui-form-danger',
+                  stop = null,
+                  verify = form.config.verify,
+                  device = layui.device()
+          var othis = $(this), ver = othis.attr('lay-verify'), tips = '';
+          var value = othis.val(), isFn = typeof verify[ver] === 'function';
+          othis.removeClass(DANGER);
+          if(verify[ver] && (isFn ? tips = verify[ver](value, this) : !verify[ver][0].test(value)) ){
+              layer.msg(tips || verify[ver][1], {
+                  icon: 5
+                  ,shift: 6
+              });
+              //非移动设备自动定位焦点
+              if(!device.android && !device.ios){
+                  this.focus();
+              }
+              othis.addClass(DANGER);
+              return stop = true;
+          }
+      }
+    })
+});
+//获取浏览器版本
+function BrowserType ()
+    {
+        var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+        var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器
+        var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器
+        var isEdge = userAgent.indexOf("Windows NT 6.1; Trident/7.0;") > -1 && !isIE; //判断是否IE的Edge浏览器
+        var isFF = userAgent.indexOf("Firefox") > -1; //判断是否Firefox浏览器
+        var isSafari = userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1; //判断是否Safari浏览器
+        var isChrome = userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1; //判断Chrome浏览器
+    }
+</script>
+
+</body>
+</html>
